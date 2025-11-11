@@ -1,3 +1,7 @@
+/**
+ * Página de registro
+ * Permite a nuevos usuarios crear una cuenta en la aplicación
+ */
 "use client"
 
 import type React from "react"
