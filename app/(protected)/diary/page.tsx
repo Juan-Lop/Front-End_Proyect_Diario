@@ -1,3 +1,7 @@
+/**
+ * Página del diario
+ * Muestra y permite gestionar las entradas del diario personal del usuario
+ */
 "use client"
 
 import { useEffect, useState } from "react"
