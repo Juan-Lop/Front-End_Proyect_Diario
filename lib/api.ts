@@ -1,3 +1,8 @@
+/**
+ * Módulo de API
+ * Gestiona las solicitudes HTTP a los microservicios del backend
+ */
+
 import { getToken } from "./auth"
 
 const DIARY_API_URL = process.env.NEXT_PUBLIC_DIARY_API_URL || "http://localhost:8082/api/v1"
