@@ -1,3 +1,7 @@
+/**
+ * Página principal del dashboard
+ * Muestra estadísticas, gráficos y recomendaciones de bienestar del usuario
+ */
 "use client"
 
 import { useEffect, useState, useMemo } from "react"
