@@ -1,3 +1,7 @@
+/**
+ * Componentes de tarjetas de estadísticas
+ * Muestra métricas clave del bienestar del usuario
+ */
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
