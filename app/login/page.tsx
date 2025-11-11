@@ -1,3 +1,7 @@
+/**
+ * Página de inicio de sesión
+ * Permite a los usuarios autenticarse en la aplicación
+ */
 "use client"
 
 import type React from "react"
