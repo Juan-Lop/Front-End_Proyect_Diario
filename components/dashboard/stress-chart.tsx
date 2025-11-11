@@ -1,3 +1,7 @@
+/**
+ * Componente de gráfico de estrés
+ * Visualiza el nivel de estrés del usuario a lo largo del tiempo
+ */
 "use client"
 
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
