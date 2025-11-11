@@ -1,3 +1,7 @@
+/**
+ * Componente de banner de alertas
+ * Muestra alertas de alta prioridad basadas en las recomendaciones del sistema
+ */
 "use client"
 
 import { useEffect, useState } from "react"
