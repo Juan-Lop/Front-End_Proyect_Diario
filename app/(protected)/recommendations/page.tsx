@@ -1,3 +1,7 @@
+/**
+ * Página de recomendaciones
+ * Muestra sugerencias personalizadas para mejorar el bienestar del usuario
+ */
 "use client"
 
 import { useEffect, useState } from "react"
