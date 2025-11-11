@@ -1,3 +1,7 @@
+/**
+ * Proveedor de contexto de autenticación
+ * Gestiona el estado de autenticación del usuario en toda la aplicación
+ */
 "use client"
 
 import type React from "react"
