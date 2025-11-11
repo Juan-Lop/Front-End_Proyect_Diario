@@ -1,3 +1,7 @@
+/**
+ * Componente de gráfico de sueño y estrés
+ * Muestra la correlación entre las horas de sueño y el nivel de estrés
+ */
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
