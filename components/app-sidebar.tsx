@@ -1,3 +1,7 @@
+/**
+ * Componente de barra lateral de la aplicación
+ * Proporciona navegación principal y muestra información del usuario
+ */
 "use client"
 
 import { Brain, LayoutDashboard, LogOut } from "lucide-react"
