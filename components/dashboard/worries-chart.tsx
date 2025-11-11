@@ -1,3 +1,7 @@
+/**
+ * Componente de gráfico de preocupaciones
+ * Muestra la distribución de temas frecuentes en las entradas del diario
+ */
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
