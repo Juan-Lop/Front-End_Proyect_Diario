@@ -1,3 +1,7 @@
+/**
+ * Página de check-in diario
+ * Permite a los usuarios registrar su estado de ánimo, estrés y sueño diariamente
+ */
 "use client"
 
 import type React from "react"
