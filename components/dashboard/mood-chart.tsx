@@ -1,3 +1,7 @@
+/**
+ * Componente de gráfico de humor
+ * Visualiza la evolución del estado de ánimo del usuario a lo largo del tiempo
+ */
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
