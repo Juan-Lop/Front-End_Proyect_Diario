@@ -1,3 +1,7 @@
+/**
+ * Componente de ruta protegida
+ * Protege rutas que requieren autenticación y redirige a login si es necesario
+ */
 "use client"
 
 import type React from "react"
