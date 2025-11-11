@@ -1,3 +1,8 @@
+/**
+ * Módulo de autenticación
+ * Gestiona el login, registro y manejo de tokens de usuario
+ */
+
 export interface User {
   id: string
   email: string
