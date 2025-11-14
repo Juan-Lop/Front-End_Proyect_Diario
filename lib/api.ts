@@ -121,10 +121,10 @@ export const diaryApi = {
 
 export const statsApi = {
   getWeekly: async () => {
-    return apiRequest<WeeklyStats>("api/v1/diary/stats/weekly")
+    return apiRequest<WeeklyStats>("api/v1/stats/weekly")
   },
 
   getRecommendations: async () => {
-    return apiRequest<Recommendation[]>("api/v1/diary/stats/recommendations")
+    return apiRequest<Recommendation[]>("api/v1/stats/recommendations")
   },
 }
