@@ -49,7 +49,7 @@ export async function login(credentials: LoginCredentials): Promise<User> {
   }
 
   // Código original para backend real
-  const response = await fetch(`${AUTH_API_URL}/login`, {
+  const response = await fetch(`${AUTH_API_URL}api/v1/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export async function register(data: RegisterData): Promise<User> {
   }
 
   // Código original para backend real
-  const response = await fetch(`${AUTH_API_URL}/register`, {
+  const response = await fetch(`${AUTH_API_URL}api/v1/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
