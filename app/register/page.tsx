@@ -31,7 +31,49 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (password !== confirmPassword) {
+    // Validar que no haya campos vacíos o solo espacios
+    const trimmedName = name.trim()
+    const trimmedEmail = email.trim()
+    const trimmedPassword = password.trim()
+    const trimmedConfirmPassword = confirmPassword.trim()
+
+    if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
+      toast({
+        title: "Error de validación",
+        description: "Por favor completa todos los campos correctamente",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (trimmedName !== name || trimmedEmail !== email || trimmedPassword !== password || trimmedConfirmPassword !== confirmPassword) {
+      toast({
+        title: "Error de validación",
+        description: "Los campos no deben contener espacios al inicio o al final",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (trimmedName.length < 2) {
+      toast({
+        title: "Error de validación",
+        description: "El nombre debe tener al menos 2 caracteres",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (trimmedPassword.length < 6) {
+      toast({
+        title: "Error de validación",
+        description: "La contraseña debe tener al menos 6 caracteres",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (trimmedPassword !== trimmedConfirmPassword) {
       toast({
         title: "Error",
         description: "Las contraseñas no coinciden",
@@ -43,7 +85,7 @@ export default function RegisterPage() {
     setLoading(true)
 
     try {
-      const user = await register({ name, email, password })
+      const user = await register({ name: trimmedName, email: trimmedEmail, password: trimmedPassword })
       setUser(user)
       toast({
         title: "¡Bienvenido!",

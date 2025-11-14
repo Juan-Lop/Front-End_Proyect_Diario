@@ -28,10 +28,33 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Validar que no haya campos vacíos o solo espacios
+    const trimmedEmail = email.trim()
+    const trimmedPassword = password.trim()
+
+    if (!trimmedEmail || !trimmedPassword) {
+      toast({
+        title: "Error de validación",
+        description: "Por favor completa todos los campos correctamente",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (trimmedEmail !== email || trimmedPassword !== password) {
+      toast({
+        title: "Error de validación",
+        description: "Los campos no deben contener espacios al inicio o al final",
+        variant: "destructive",
+      })
+      return
+    }
+
     setLoading(true)
 
     try {
-      const user = await login({ email, password })
+      const user = await login({ email: trimmedEmail, password: trimmedPassword })
       setUser(user)
       toast({
         title: "Bienvenido de vuelta",
