@@ -5,7 +5,7 @@
 
 import { getToken } from "./auth"
 
-const DIARY_API_URL = process.env.NEXT_PUBLIC_DIARY_API_URL || "http://localhost:8082/api/v1"
+const DIARY_API_URL = process.env.NEXT_PUBLIC_DIARY_API_URL || "https://micro-servicio-diary-service.onrender.com"
 
 export async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = getToken()
