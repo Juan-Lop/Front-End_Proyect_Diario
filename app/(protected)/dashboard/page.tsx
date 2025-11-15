@@ -125,28 +125,47 @@ export default function DashboardPage() {
 
   const loadData = async () => {
     try {
-      const [statsData, entriesData, recsData] = await Promise.all([
+      const [statsData, entriesData, recsData] = await Promise.allSettled([
         statsApi.getWeekly(), 
         diaryApi.getAll(),
         statsApi.getRecommendations()
       ])
-      setStats(statsData)
-      setRecommendations(recsData)
-      const sortedEntries = entriesData.sort((a, b) => new Date(b.entryDate!).getTime() - new Date(a.entryDate!).getTime())
-      setEntries(sortedEntries)
-      const today = new Date()
-      // Normalize today's date to UTC start of day for accurate comparison
-      const todayUtcStart = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()))
+      
+      // Manejar stats
+      if (statsData.status === 'fulfilled') {
+        setStats(statsData.value)
+      } else {
+        console.error('Error loading stats:', statsData.reason)
+      }
+      
+      // Manejar entries
+      if (entriesData.status === 'fulfilled') {
+        const sortedEntries = entriesData.value.sort((a, b) => new Date(b.entryDate!).getTime() - new Date(a.entryDate!).getTime())
+        setEntries(sortedEntries)
+        const today = new Date()
+        // Normalize today's date to UTC start of day for accurate comparison
+        const todayUtcStart = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()))
 
-      const todayEntryFound = sortedEntries.find((entry) => {
-        const entryDate = new Date(entry.entryDate!)
-        // Normalize entry's date to UTC start of day
-        const entryDateUtcStart = new Date(Date.UTC(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate()))
-        return todayUtcStart.getTime() === entryDateUtcStart.getTime()
-      })
-      setTodayEntry(todayEntryFound || null)
+        const todayEntryFound = sortedEntries.find((entry) => {
+          const entryDate = new Date(entry.entryDate!)
+          // Normalize entry's date to UTC start of day
+          const entryDateUtcStart = new Date(Date.UTC(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate()))
+          return todayUtcStart.getTime() === entryDateUtcStart.getTime()
+        })
+        setTodayEntry(todayEntryFound || null)
+      } else {
+        console.error('Error loading entries:', entriesData.reason)
+      }
+      
+      // Manejar recommendations (puede fallar sin romper el dashboard)
+      if (recsData.status === 'fulfilled') {
+        setRecommendations(recsData.value)
+      } else {
+        console.warn('⚠️ No se pudieron cargar las recomendaciones (el backend puede estar procesándolas):', recsData.reason)
+        setRecommendations([]) // Establecer array vacío en lugar de fallar
+      }
     } catch (error) {
-      toast({ title: "Error", description: "No se pudieron cargar todos los datos del dashboard.", variant: "destructive" })
+      toast({ title: "Error", description: "No se pudieron cargar algunos datos del dashboard.", variant: "destructive" })
     } finally {
       setLoading(false)
     }
