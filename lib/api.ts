@@ -22,17 +22,26 @@ export async function apiRequest<T>(endpoint: string, options: RequestInit = {})
     headers["Authorization"] = `Bearer ${token}`
   }
 
-  const response = await fetch(`${DIARY_API_URL}${endpoint}`, {
+  const url = `${DIARY_API_URL}${endpoint}`
+  console.log('🔵 API Request:', { url, method: options.method || 'GET', hasToken: !!token })
+
+  const response = await fetch(url, {
     ...options,
     headers,
   })
 
+  console.log('🟢 API Response:', { url, status: response.status, ok: response.ok })
+
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: "Error en la solicitud" }))
+    console.error('🔴 API Error:', { url, status: response.status, error })
     throw new Error(error.message || "Error en la solicitud")
   }
 
-  return response.json()
+  const data = await response.json()
+  console.log('✅ API Data:', { url, dataType: Array.isArray(data) ? 'array' : 'object', length: Array.isArray(data) ? data.length : 'N/A' })
+  
+  return data
 }
 
 // Tipos para el diary service
