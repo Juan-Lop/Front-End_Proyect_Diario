@@ -48,12 +48,25 @@ export default function DiaryPage() {
         title: "Entrada guardada",
         description: "Tu entrada ha sido guardada con análisis de sentimientos",
       })
+      // Recargar entradas para asegurar sincronización
+      await loadEntries()
     } catch (error) {
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Error al guardar la entrada",
-        variant: "destructive",
-      })
+      const errorMessage = error instanceof Error ? error.message : "Error al guardar la entrada"
+      
+      // Manejo específico del error 409
+      if (errorMessage.includes("Solo se permite una entrada")) {
+        toast({
+          title: "Ya existe una entrada hoy",
+          description: "Solo puedes crear una entrada de diario por día. Puedes editar la entrada existente.",
+          variant: "destructive",
+        })
+      } else {
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        })
+      }
     }
   }
 
