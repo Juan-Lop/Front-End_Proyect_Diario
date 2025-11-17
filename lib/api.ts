@@ -48,17 +48,22 @@ export interface CheckIn {
 }
 
 export interface DiaryEntry {
-  id?: string
-  userId: string
+  id?: number | string
+  userId: number | string
   entryText: string
   moodRating: number
   stressLevel?: number // 1-10
   sleepHours?: number // 0-12
   mainWorry?: string
-  aiEmotion?: string
-  aiIntensity?: number
+  // Campos del backend (nuevos nombres correctos)
+  detectedEmotion?: string
+  emotionalIntensity?: number
+  keyWords?: string[]
   aiSummary?: string
   entryDate?: string
+  // Campos antiguos (mantener para retrocompatibilidad)
+  aiEmotion?: string
+  aiIntensity?: number
 }
 
 export interface WeeklyStats {
