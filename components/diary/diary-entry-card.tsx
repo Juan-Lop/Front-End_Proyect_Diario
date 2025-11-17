@@ -30,34 +30,27 @@ export function DiaryEntryCard({ entry, onEdit }: DiaryEntryCardProps) {
       })
     : "";
 
+  // Usar el campo correcto del backend (detectedEmotion o aiEmotion para retrocompatibilidad)
+  const emotion = entry.detectedEmotion || entry.aiEmotion;
+  const intensity = entry.emotionalIntensity || entry.aiIntensity;
+
   const getSentimentColor = (aiEmotion?: string) => {
     if (!aiEmotion) return "secondary"
-    switch (aiEmotion.toLowerCase()) {
-      case "positive":
-      case "positivo":
-        return "default"
-      case "negative":
-      case "negativo":
-        return "destructive"
-      case "neutral":
-        return "secondary"
-      default:
-        return "secondary"
+    const emotionLower = aiEmotion.toLowerCase();
+    // Soporte para emociones específicas del backend
+    if (emotionLower.includes("alegr") || emotionLower.includes("feliz") || emotionLower === "positive" || emotionLower === "positivo") {
+      return "default"
     }
+    if (emotionLower.includes("trist") || emotionLower.includes("enojo") || emotionLower === "negative" || emotionLower === "negativo") {
+      return "destructive"
+    }
+    return "secondary"
   }
 
   const getSentimentLabel = (aiEmotion?: string) => {
     if (!aiEmotion) return "Sin análisis"
-    switch (aiEmotion.toLowerCase()) {
-      case "positive":
-        return "Positivo"
-      case "negative":
-        return "Negativo"
-      case "neutral":
-        return "Neutral"
-      default:
-        return aiEmotion
-    }
+    // Capitalizar primera letra
+    return aiEmotion.charAt(0).toUpperCase() + aiEmotion.slice(1);
   }
 
   return (
@@ -73,8 +66,11 @@ export function DiaryEntryCard({ entry, onEdit }: DiaryEntryCardProps) {
             </CardTitle>
           </div>
           <div className="flex items-center gap-2">
-            {entry.aiEmotion && (
-              <Badge variant={getSentimentColor(entry.aiEmotion)}>{getSentimentLabel(entry.aiEmotion)} {entry.aiIntensity && `(${Math.round(entry.aiIntensity * 100)}%)`}</Badge>
+            {emotion && (
+              <Badge variant={getSentimentColor(emotion)}>
+                {getSentimentLabel(emotion)}
+                {intensity && ` (${Math.round(intensity)}/10)`}
+              </Badge>
             )}
             {onEdit && (
               <Button variant="ghost" size="sm" onClick={() => onEdit(entry)}>

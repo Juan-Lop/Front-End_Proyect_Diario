@@ -27,8 +27,15 @@ export default function DiaryPage() {
   const loadEntries = async () => {
     try {
       const data = await diaryApi.getAll()
-      setEntries(data.sort((a, b) => new Date(b.entryDate).getTime() - new Date(a.entryDate).getTime()))
+      console.log("📝 [DIARY DEBUG] Datos recibidos del backend:", data)
+      console.log("📝 [DIARY DEBUG] Cantidad de entradas:", data.length)
+      console.log("📝 [DIARY DEBUG] Primera entrada:", data[0])
+      const sortedData = data.sort((a, b) => new Date(b.entryDate).getTime() - new Date(a.entryDate).getTime())
+      console.log("📝 [DIARY DEBUG] Datos ordenados:", sortedData)
+      setEntries(sortedData)
+      console.log("📝 [DIARY DEBUG] Entradas guardadas en el estado")
     } catch (error) {
+      console.error("📝 [DIARY ERROR] Error al cargar entradas:", error)
       toast({
         title: "Error",
         description: "No se pudieron cargar las entradas del diario",
@@ -96,9 +103,11 @@ export default function DiaryPage() {
         </Card>
       ) : (
         <div className="space-y-4">
-          {entries.map((entry) => (
-            <DiaryEntryCard key={entry.id} entry={entry} />
-          ))}
+          {console.log("📝 [DIARY RENDER] Renderizando", entries.length, "entradas:", entries)}
+          {entries.map((entry) => {
+            console.log("📝 [DIARY RENDER] Renderizando entrada:", entry.id, entry)
+            return <DiaryEntryCard key={entry.id} entry={entry} />
+          })}
         </div>
       )}
 
