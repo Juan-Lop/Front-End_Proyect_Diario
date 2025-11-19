@@ -156,7 +156,7 @@ export default function DashboardPage() {
     try {
       if (editingEntry) {
         const updatedEntry = { ...entry, id: editingEntry.id }
-        const savedEntry = await diaryApi.update(editingEntry.id!, updatedEntry)
+        const savedEntry = await diaryApi.update(String(editingEntry.id!), updatedEntry)
         setEntries(entries.map((e) => (e.id === editingEntry.id ? savedEntry : e)))
         toast({ title: "Entrada actualizada", description: "Tu entrada ha sido actualizada exitosamente" })
       } else {
