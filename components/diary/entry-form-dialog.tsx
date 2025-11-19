@@ -280,6 +280,7 @@ export function EntryFormDialog({ open, onOpenChange, onSave, editingEntry }: En
                     onChange={(e) => setCustomConcern(e.target.value)}
                     disabled={loading}
                     required
+                    maxLength={10}
                   />
                 </div>
               )}
