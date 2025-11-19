@@ -221,7 +221,7 @@ export function EntryFormDialog({ open, onOpenChange, onSave, editingEntry }: En
               </div>
               <Slider
                 id="sleep"
-                min={0}
+                min={1}
                 max={12}
                 step={0.5}
                 value={[sleepHours]}
