@@ -75,6 +75,10 @@ export function EntryFormDialog({ open, onOpenChange, onSave, editingEntry }: En
     e.preventDefault()
     if (!user || !entryText.trim()) return
 
+    if (entryText.trim().length > 120) {
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -146,9 +150,14 @@ export function EntryFormDialog({ open, onOpenChange, onSave, editingEntry }: En
           <div className="py-4 space-y-6">
             {/* Campo de texto principal */}
             <div>
-              <Label htmlFor="content" className="text-base font-medium mb-2 block">
-                ¿Cómo te sientes hoy? 💭
-              </Label>
+              <div className="flex items-center justify-between mb-2">
+                <Label htmlFor="content" className="text-base font-medium">
+                  ¿Cómo te sientes hoy? 💭
+                </Label>
+                <span className={`text-sm ${entryText.length > 120 ? 'text-destructive font-bold' : 'text-muted-foreground'}`}>
+                  {entryText.length}/120 caracteres
+                </span>
+              </div>
               <Textarea
                 id="content"
                 placeholder="Escribe libremente sobre tus pensamientos y emociones..."
@@ -158,7 +167,13 @@ export function EntryFormDialog({ open, onOpenChange, onSave, editingEntry }: En
                 className="resize-none"
                 required
                 disabled={loading}
+                maxLength={120}
               />
+              {entryText.length > 110 && (
+                <p className={`text-xs mt-1 ${entryText.length > 120 ? 'text-destructive' : 'text-amber-600'}`}>
+                  {entryText.length > 120 ? '⚠️ Has superado el límite de caracteres' : '⚠️ Te acercas al límite de caracteres'}
+                </p>
+              )}
             </div>
 
             <div className="space-y-3">
