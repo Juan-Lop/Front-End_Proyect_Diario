@@ -64,10 +64,37 @@ export default function RegisterPage() {
       return
     }
 
+    if (trimmedName.length > 30) {
+      toast({
+        title: "Error de validación",
+        description: "El nombre no debe superar los 30 caracteres",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (trimmedEmail.length > 30) {
+      toast({
+        title: "Error de validación",
+        description: "El correo no debe superar los 30 caracteres",
+        variant: "destructive",
+      })
+      return
+    }
+
     if (trimmedPassword.length < 6) {
       toast({
         title: "Error de validación",
         description: "La contraseña debe tener al menos 6 caracteres",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (trimmedPassword.length > 30) {
+      toast({
+        title: "Error de validación",
+        description: "La contraseña no debe superar los 30 caracteres",
         variant: "destructive",
       })
       return
@@ -125,6 +152,7 @@ export default function RegisterPage() {
                 onChange={(e) => setName(e.target.value)}
                 required
                 disabled={loading}
+                maxLength={30}
               />
             </div>
             <div className="space-y-2">
@@ -137,6 +165,7 @@ export default function RegisterPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
+                maxLength={30}
               />
             </div>
             <div className="space-y-2">
@@ -150,6 +179,7 @@ export default function RegisterPage() {
                 required
                 disabled={loading}
                 minLength={6}
+                maxLength={30}
               />
             </div>
             <div className="space-y-2">
@@ -163,6 +193,7 @@ export default function RegisterPage() {
                 required
                 disabled={loading}
                 minLength={6}
+                maxLength={30}
               />
             </div>
           </CardContent>
