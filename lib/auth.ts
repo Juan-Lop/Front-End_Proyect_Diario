@@ -22,7 +22,7 @@ export interface RegisterData {
 }
 
 // URL base del microservicio de autenticación
-const AUTH_API_URL = process.env.NEXT_PUBLIC_AUTH_API_URL || "https://micro-servicio-auht.onrender.com/api/v1/auth"
+const AUTH_API_URL = process.env.NEXT_PUBLIC_AUTH_API_URL || "https://micro-servicio-auht.onrender.com"
 
 const DEMO_MODE = false // Cambiar a false para usar el backend real
 
@@ -49,7 +49,7 @@ export async function login(credentials: LoginCredentials): Promise<User> {
   }
 
   // Código original para backend real
-  const response = await fetch(`${AUTH_API_URL}/login`, {
+  const response = await fetch(`${AUTH_API_URL}/api/v1/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export async function register(data: RegisterData): Promise<User> {
   }
 
   // Código original para backend real
-  const response = await fetch(`${AUTH_API_URL}/register`, {
+  const response = await fetch(`${AUTH_API_URL}/api/v1/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
