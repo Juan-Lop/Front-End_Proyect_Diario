@@ -280,7 +280,8 @@ export function EntryFormDialog({ open, onOpenChange, onSave, editingEntry }: En
                     onChange={(e) => setCustomConcern(e.target.value)}
                     disabled={loading}
                     required
-                    maxLength={10}
+                    minLength={5}
+                    maxLength={30}
                   />
                 </div>
               )}
@@ -304,7 +305,7 @@ export function EntryFormDialog({ open, onOpenChange, onSave, editingEntry }: En
             <Button
               type="submit"
               disabled={
-                loading || entryText.trim().length < 50 || !mainWorry || (mainWorry === "Otra" && !customConcern.trim())
+                loading || entryText.trim().length < 50 || !mainWorry || (mainWorry === "Otra" && (customConcern.trim().length < 5 || customConcern.trim().length > 30))
               }
             >
               {loading ? "Guardando..." : editingEntry ? "💾 Actualizar Entrada" : "💾 Guardar Entrada"}
