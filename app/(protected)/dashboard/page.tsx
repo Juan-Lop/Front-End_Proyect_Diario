@@ -142,15 +142,13 @@ export default function DashboardPage() {
       setRecommendations(recsData)
       const sortedEntries = entriesData.sort((a, b) => new Date(b.entryDate!).getTime() - new Date(a.entryDate!).getTime())
       setEntries(sortedEntries)
-      const today = new Date()
-      // Normalize today's date to UTC start of day for accurate comparison
-      const todayUtcStart = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()))
-
+      
+      // Buscar entrada de hoy usando solo la fecha sin hora
+      const todayStr = new Date().toISOString().split('T')[0]
       const todayEntryFound = sortedEntries.find((entry) => {
-        const entryDate = new Date(entry.entryDate!)
-        // Normalize entry's date to UTC start of day
-        const entryDateUtcStart = new Date(Date.UTC(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate()))
-        return todayUtcStart.getTime() === entryDateUtcStart.getTime()
+        if (!entry.entryDate) return false
+        const entryDateStr = entry.entryDate.split('T')[0]
+        return entryDateStr === todayStr
       })
       setTodayEntry(todayEntryFound || null)
     } catch (error) {
