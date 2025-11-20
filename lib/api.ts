@@ -5,7 +5,7 @@
 
 import { getToken } from "./auth"
 
-const DIARY_API_URL = process.env.NEXT_PUBLIC_DIARY_API_URL || "https://micro-servicio-diary-service.onrender.com/api/v1"
+const DIARY_API_URL = process.env.NEXT_PUBLIC_DIARY_API_URL || "https://micro-servicio-diary-service.onrender.com"
 
 export async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = getToken()
@@ -85,51 +85,51 @@ export interface Recommendation {
 // API functions
 export const checkInApi = {
   create: async (data: CheckIn) => {
-    return apiRequest<CheckIn>("api/v1/checkins", {
+    return apiRequest<CheckIn>("/api/v1/checkins", {
       method: "POST",
       body: JSON.stringify(data),
     })
   },
 
   getAll: async () => {
-    return apiRequest<CheckIn[]>("api/v1/checkins")
+    return apiRequest<CheckIn[]>("/api/v1/checkins")
   },
 
   getById: async (id: string) => {
-    return apiRequest<CheckIn>(`api/v1/checkins/${id}`)
+    return apiRequest<CheckIn>(`/api/v1/checkins/${id}`)
   },
 }
 
 export const diaryApi = {
   create: async (data: DiaryEntry) => {
-    return apiRequest<DiaryEntry>("api/v1/diary", {
+    return apiRequest<DiaryEntry>("/api/v1/diary", {
       method: "POST",
       body: JSON.stringify(data),
     })
   },
 
   update: async (id: string, data: DiaryEntry) => {
-    return apiRequest<DiaryEntry>(`api/v1/diary/${id}`, {
+    return apiRequest<DiaryEntry>(`/api/v1/diary/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
     })
   },
 
   getAll: async () => {
-    return apiRequest<DiaryEntry[]>("api/v1/diary")
+    return apiRequest<DiaryEntry[]>("/api/v1/diary")
   },
 
   getById: async (id: string) => {
-    return apiRequest<DiaryEntry>(`api/v1/diary/${id}`)
+    return apiRequest<DiaryEntry>(`/api/v1/diary/${id}`)
   },
 }
 
 export const statsApi = {
   getWeekly: async () => {
-    return apiRequest<WeeklyStats>("api/v1/stats/weekly")
+    return apiRequest<WeeklyStats>("/api/v1/stats/weekly")
   },
 
   getRecommendations: async () => {
-    return apiRequest<Recommendation[]>("api/v1/stats/recommendations")
+    return apiRequest<Recommendation[]>("/api/v1/stats/recommendations")
   },
 }
