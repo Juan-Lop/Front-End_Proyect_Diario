@@ -57,25 +57,34 @@ export default function DashboardPage() {
   const [searchDate, setSearchDate] = useState<Date | undefined>(undefined)
 
   const filteredEntriesByDate = useMemo(() => {
-    if (!entries || entries.length === 0) return []
-    
-    // Si no hay rango de fechas, mostrar todas las entradas
-    if (!dateRange?.from) return entries
-    
-    return entries.filter((entry) => {
-      if (!entry.entryDate) return false
-      
-      const entryDate = new Date(entry.entryDate)
-      const fromDate = new Date(dateRange.from!)
-      const toDate = dateRange.to ? new Date(dateRange.to) : new Date()
-      
-      // Extraer solo año, mes y día para comparación
-      const entryDay = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate()).getTime()
-      const fromDay = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate()).getTime()
-      const toDay = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate()).getTime()
-      
-      return entryDay >= fromDay && entryDay <= toDay
+    console.log("🔍 Filtrando entradas:", { 
+      totalEntries: entries.length, 
+      dateRange,
+      primeraEntrada: entries[0]
     })
+    
+    const filtered = entries.filter((entry) => {
+      if (!dateRange?.from || !entry.entryDate) {
+        console.log("❌ Entrada rechazada (sin rango o fecha):", entry)
+        return false
+      }
+      const entryDate = new Date(entry.entryDate)
+      const fromDate = new Date(dateRange.from)
+      const toDate = new Date(dateRange.to || dateRange.from)
+      
+      // Normalizar a fecha local sin hora
+      const entryDay = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate())
+      const fromDay = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate())
+      const toDay = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate())
+      
+      const isInRange = entryDay >= fromDay && entryDay <= toDay
+      console.log(isInRange ? "✅" : "❌", "Entrada:", entry.id, {entryDay, fromDay, toDay, isInRange})
+      
+      return isInRange
+    })
+    
+    console.log("✅ Entradas filtradas:", filtered.length)
+    return filtered
   }, [entries, dateRange])
 
   const finalFilteredEntries = useMemo(() => {
@@ -139,6 +148,11 @@ export default function DashboardPage() {
         diaryApi.getAll(),
         statsApi.getRecommendations()
       ])
+      console.log("🔍 DATOS DEL BACKEND:", { 
+        entriesData, 
+        primeraEntrada: entriesData[0],
+        campos: entriesData[0] ? Object.keys(entriesData[0]) : []
+      })
       setStats(statsData)
       setRecommendations(recsData)
       const sortedEntries = entriesData.sort((a, b) => new Date(b.entryDate!).getTime() - new Date(a.entryDate!).getTime())
