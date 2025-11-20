@@ -85,51 +85,51 @@ export interface Recommendation {
 // API functions
 export const checkInApi = {
   create: async (data: CheckIn) => {
-    return apiRequest<CheckIn>("/api/v1/checkins", {
+    return apiRequest<CheckIn>("/checkins", {
       method: "POST",
       body: JSON.stringify(data),
     })
   },
 
   getAll: async () => {
-    return apiRequest<CheckIn[]>("/api/v1/checkins")
+    return apiRequest<CheckIn[]>("/checkins")
   },
 
   getById: async (id: string) => {
-    return apiRequest<CheckIn>(`/api/v1/checkins/${id}`)
+    return apiRequest<CheckIn>(`/checkins/${id}`)
   },
 }
 
 export const diaryApi = {
   create: async (data: DiaryEntry) => {
-    return apiRequest<DiaryEntry>("/api/v1/diary", {
+    return apiRequest<DiaryEntry>("/diary", {
       method: "POST",
       body: JSON.stringify(data),
     })
   },
 
   update: async (id: string, data: DiaryEntry) => {
-    return apiRequest<DiaryEntry>(`/api/v1/diary/${id}`, {
+    return apiRequest<DiaryEntry>(`/diary/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
     })
   },
 
   getAll: async () => {
-    return apiRequest<DiaryEntry[]>("/api/v1/diary")
+    return apiRequest<DiaryEntry[]>("/diary")
   },
 
   getById: async (id: string) => {
-    return apiRequest<DiaryEntry>(`/api/v1/diary/${id}`)
+    return apiRequest<DiaryEntry>(`/diary/${id}`)
   },
 }
 
 export const statsApi = {
   getWeekly: async () => {
-    return apiRequest<WeeklyStats>("/api/v1/stats/weekly")
+    return apiRequest<WeeklyStats>("/stats/weekly")
   },
 
   getRecommendations: async () => {
-    return apiRequest<Recommendation[]>("/api/v1/stats/recommendations")
+    return apiRequest<Recommendation[]>("/stats/recommendations")
   },
 }
