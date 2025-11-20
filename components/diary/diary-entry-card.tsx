@@ -23,13 +23,6 @@ export function DiaryEntryCard({ entry, onEdit }: DiaryEntryCardProps) {
       })
     : "Fecha inválida";
 
-  const formattedTime = date
-    ? date.toLocaleTimeString("es-ES", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "";
-
   // Usar el campo correcto del backend (detectedEmotion o aiEmotion para retrocompatibilidad)
   const emotion = entry.detectedEmotion || entry.aiEmotion;
   const intensity = entry.emotionalIntensity || entry.aiIntensity;
@@ -61,7 +54,7 @@ export function DiaryEntryCard({ entry, onEdit }: DiaryEntryCardProps) {
             <CardTitle className="text-lg">
               <div className="flex items-center gap-2 text-sm text-muted-foreground font-normal mb-1">
                 <Calendar className="w-4 h-4" />
-                {formattedDate}, {formattedTime}
+                {formattedDate}
               </div>
             </CardTitle>
           </div>
