@@ -57,16 +57,34 @@ export default function DashboardPage() {
   const [searchDate, setSearchDate] = useState<Date | undefined>(undefined)
 
   const filteredEntriesByDate = useMemo(() => {
-    return entries.filter((entry) => {
-      if (!dateRange?.from || !entry.entryDate) return false
+    console.log("🔍 Filtrando entradas:", { 
+      totalEntries: entries.length, 
+      dateRange,
+      primeraEntrada: entries[0]
+    })
+    
+    const filtered = entries.filter((entry) => {
+      if (!dateRange?.from || !entry.entryDate) {
+        console.log("❌ Entrada rechazada (sin rango o fecha):", entry)
+        return false
+      }
       const entryDate = new Date(entry.entryDate)
       const fromDate = new Date(dateRange.from)
       const toDate = new Date(dateRange.to || dateRange.from)
-      entryDate.setHours(0, 0, 0, 0)
-      fromDate.setHours(0, 0, 0, 0)
-      toDate.setHours(0, 0, 0, 0)
-      return entryDate >= fromDate && entryDate <= toDate
+      
+      // Normalizar a fecha local sin hora
+      const entryDay = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate())
+      const fromDay = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate())
+      const toDay = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate())
+      
+      const isInRange = entryDay >= fromDay && entryDay <= toDay
+      console.log(isInRange ? "✅" : "❌", "Entrada:", entry.id, {entryDay, fromDay, toDay, isInRange})
+      
+      return isInRange
     })
+    
+    console.log("✅ Entradas filtradas:", filtered.length)
+    return filtered
   }, [entries, dateRange])
 
   const finalFilteredEntries = useMemo(() => {
@@ -130,6 +148,11 @@ export default function DashboardPage() {
         diaryApi.getAll(),
         statsApi.getRecommendations()
       ])
+      console.log("🔍 DATOS DEL BACKEND:", { 
+        entriesData, 
+        primeraEntrada: entriesData[0],
+        campos: entriesData[0] ? Object.keys(entriesData[0]) : []
+      })
       setStats(statsData)
       setRecommendations(recsData)
       const sortedEntries = entriesData.sort((a, b) => new Date(b.entryDate!).getTime() - new Date(a.entryDate!).getTime())
