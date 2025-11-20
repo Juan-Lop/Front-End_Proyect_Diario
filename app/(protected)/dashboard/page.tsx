@@ -57,34 +57,24 @@ export default function DashboardPage() {
   const [searchDate, setSearchDate] = useState<Date | undefined>(undefined)
 
   const filteredEntriesByDate = useMemo(() => {
-    console.log("🔍 Filtrando entradas:", { 
-      totalEntries: entries.length, 
-      dateRange,
-      primeraEntrada: entries[0]
-    })
+    if (!entries || entries.length === 0) return []
+    if (!dateRange?.from) return entries
     
-    const filtered = entries.filter((entry) => {
-      if (!dateRange?.from || !entry.entryDate) {
-        console.log("❌ Entrada rechazada (sin rango o fecha):", entry)
-        return false
-      }
-      const entryDate = new Date(entry.entryDate)
-      const fromDate = new Date(dateRange.from)
-      const toDate = new Date(dateRange.to || dateRange.from)
+    return entries.filter((entry) => {
+      if (!entry.entryDate) return false
       
-      // Normalizar a fecha local sin hora
-      const entryDay = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate())
-      const fromDay = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate())
-      const toDay = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate())
+      // Extraer solo la fecha (YYYY-MM-DD) ignorando la hora y zona horaria
+      const entryDateStr = entry.entryDate.split('T')[0]
+      const entryDate = new Date(entryDateStr + 'T00:00:00')
       
-      const isInRange = entryDay >= fromDay && entryDay <= toDay
-      console.log(isInRange ? "✅" : "❌", "Entrada:", entry.id, {entryDay, fromDay, toDay, isInRange})
+      const fromDateStr = dateRange.from!.toISOString().split('T')[0]
+      const fromDate = new Date(fromDateStr + 'T00:00:00')
       
-      return isInRange
+      const toDateStr = (dateRange.to || new Date()).toISOString().split('T')[0]
+      const toDate = new Date(toDateStr + 'T23:59:59')
+      
+      return entryDate >= fromDate && entryDate <= toDate
     })
-    
-    console.log("✅ Entradas filtradas:", filtered.length)
-    return filtered
   }, [entries, dateRange])
 
   const finalFilteredEntries = useMemo(() => {
