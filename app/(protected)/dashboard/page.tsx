@@ -138,11 +138,6 @@ export default function DashboardPage() {
         diaryApi.getAll(),
         statsApi.getRecommendations()
       ])
-      console.log("🔍 DATOS DEL BACKEND:", { 
-        entriesData, 
-        primeraEntrada: entriesData[0],
-        campos: entriesData[0] ? Object.keys(entriesData[0]) : []
-      })
       setStats(statsData)
       setRecommendations(recsData)
       const sortedEntries = entriesData.sort((a, b) => new Date(b.entryDate!).getTime() - new Date(a.entryDate!).getTime())
