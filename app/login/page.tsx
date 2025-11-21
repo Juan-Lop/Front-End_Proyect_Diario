@@ -1,5 +1,5 @@
 /**
- * Página de inicio de sesió
+ * Página de inicio de sesión
  * Permite a los usuarios autenticarse en la aplicación
  */
 "use client"
